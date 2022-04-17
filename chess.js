@@ -41,6 +41,7 @@ function startGame() {
                 tool = "pawn";
             }
             let square = document.createElement('td');
+            square.setAttribute('id',j*i);
             row.appendChild(square);
             let toolImg = document.createElement('img');
             toolImg.src = 'images/' + color + '_' + tool + '.png';
@@ -50,4 +51,15 @@ function startGame() {
         tbody.appendChild(row);
     }
 }
-let chosenTool=document.getElementsByTagName('td');
+for(let i=0;i<8;i++)
+{
+    let square =document.getElementById(i.toString());
+        square.addEventListener('click',()=> {
+            square.style.backgroundColor='green';
+        })
+}
+
+
+
+
+

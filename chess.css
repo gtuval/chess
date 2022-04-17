@@ -27,3 +27,7 @@ tr:nth-child(odd) td:nth-child(even),tr:nth-child(even) td:nth-child(odd)
 tr:nth-child(odd) td:nth-child(even):hover,tr:nth-child(even) td:nth-child(odd):hover,td:hover{
     background: gray;
 }
+
+td.active {
+    background: rgb(7, 168, 42);
+  }
