@@ -13,7 +13,7 @@ table{
 
 tr:nth-child(odd) td:nth-child(even),tr:nth-child(even) td:nth-child(odd)
 {
-    background: black;
+    background: rgba(0, 0, 0, 0.596);
 }
 tr:nth-child(odd) td:nth-child(even):hover,tr:nth-child(even) td:nth-child(odd):hover,td:hover{
     background: gray;
