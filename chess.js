@@ -1,5 +1,5 @@
 const TableSize = 8;
-function addTable() {
+function startGame() {
     let table = document.createElement('table');
     let tbody = document.createElement('tbody');
     table.appendChild(tbody);
@@ -17,7 +17,7 @@ function addTable() {
             default: color = ("white");
         }
         for (let j = 1; j <= TableSize; j++) {
-            if (i !== 1 || i !== 7) {
+            {
                 switch (j) {
                     case 1: tool = ("rook");
                         break;
@@ -37,16 +37,17 @@ function addTable() {
                         break;
                 }
             }
-            else
-            {
-                tool="pawn";
+            if (i === 2 || i === 7) {
+                tool = "pawn";
             }
-                let square = document.createElement('td');
+            let square = document.createElement('td');
             row.appendChild(square);
-            let toolImg=document.createElement('img');
-            toolImg.src='images/'+color+'_'+tool+'.png';
-            square.appendChild(toolImg);
+            let toolImg = document.createElement('img');
+            toolImg.src = 'images/' + color + '_' + tool + '.png';
+            if (i === 1 || i === 2 || i === 7 || i === 8)
+                square.appendChild(toolImg);
         }
         tbody.appendChild(row);
     }
 }
+let chosenTool=document.getElementsByTagName('td');
