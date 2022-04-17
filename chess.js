@@ -1,65 +1,79 @@
-const TableSize = 8;
 function startGame() {
+    const RowSize = 8;
+
+    const toolRows = [1, 2, 7, 8];
+    const tools = [ "rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook" ];
+
+    
     let table = document.createElement('table');
     let tbody = document.createElement('tbody');
+    
     table.appendChild(tbody);
     document.body.appendChild(table);
+    
     let color;
     let tool;
-    for (let i = 1; i <= TableSize; i++) {
-        let row = document.createElement('tr');
+    const pressedColor = '#D3FAC6';
+    const firstRowColor = 'white';
+    const lastRowColor = firstRowColor === 'black' ? 'white' : 'black';
 
-        switch (i) {
-            case 1: color = ("black");
-                break;
-            case 2: color = ("black");
-                break;
-            default: color = ("white");
+    let savedSquare = undefined;
+
+    const getRowColor = (rowIndex) => {
+        if (rowIndex === 1 || rowIndex === 2) {
+            return firstRowColor;
         }
-        for (let j = 1; j <= TableSize; j++) {
-            {
-                switch (j) {
-                    case 1: tool = ("rook");
-                        break;
-                    case 2: tool = ("knight");
-                        break;
-                    case 3: tool = ("bishop");
-                        break;
-                    case 4: tool = ("queen");
-                        break;
-                    case 5: tool = ("king");
-                        break;
-                    case 6: tool = ("bishop");
-                        break;
-                    case 7: tool = ("knight");
-                        break;
-                    case 8: tool = ("rook");
-                        break;
+        return lastRowColor;
+    }
+
+    const getChessTool = (rowIndex, columnIndex) => {
+        if (rowIndex === 2 || rowIndex === 7) {
+            return "pawn";
+        }
+
+        //Return chess tool according to column index
+        return tools[columnIndex - 1];
+    }
+
+    const buildBoard = () => {
+        for (let rowIndex = 1; rowIndex <= RowSize; rowIndex++) {
+            let row = document.createElement('tr');
+    
+            color = getRowColor(rowIndex);
+            for (let columnIndex = 1; columnIndex <= RowSize; columnIndex++) {
+                
+                tool = getChessTool(rowIndex, columnIndex);
+                
+                let square = document.createElement('td');
+                square.setAttribute('id',`${rowIndex}_${columnIndex}`);
+                square.onclick = () => {
+
+                    //If saved square exists and its equal to square 
+                    //then clear the color and saved color
+                    if (savedSquare) {
+                        if (savedSquare.id === square.id) {
+                            square.style.background = '';
+                            savedSquare = undefined;
+                            return;
+                        } else {
+                            savedSquare.style.background = '';
+                        }
+                    } 
+                    square.style.background = pressedColor;
+                    savedSquare = square;
+                };
+                
+                row.appendChild(square);
+                
+                if (toolRows.indexOf(rowIndex) !== -1) { 
+                    let toolImg = document.createElement('img');
+                    toolImg.src = `images/${color}_${tool}.png`; 
+                    square.appendChild(toolImg);
                 }
             }
-            if (i === 2 || i === 7) {
-                tool = "pawn";
-            }
-            let square = document.createElement('td');
-            square.setAttribute('id',j*i);
-            row.appendChild(square);
-            let toolImg = document.createElement('img');
-            toolImg.src = 'images/' + color + '_' + tool + '.png';
-            if (i === 1 || i === 2 || i === 7 || i === 8)
-                square.appendChild(toolImg);
-        }
-        tbody.appendChild(row);
+            tbody.appendChild(row);
+        }   
     }
+    
+    buildBoard();
 }
-for(let i=0;i<8;i++)
-{
-    let square =document.getElementById(i.toString());
-        square.addEventListener('click',()=> {
-            square.style.backgroundColor='green';
-        })
-}
-
-
-
-
-
