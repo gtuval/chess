@@ -92,6 +92,8 @@ function startGame() {
                             break;
                         case 'pawn': colorOneColume(rowIndex, columnIndex, color);
                             break;
+                            case 'king': colorAllAround(rowIndex,columnIndex);
+                            break;
                     }
 
                     savedSquare = square;
@@ -151,18 +153,30 @@ function startGame() {
     const colorOneColume = (rowIndex, columnIndex, color) => {
         let allTd = document.getElementsByTagName('td');
         let chosenSqure=document.getElementById(`${rowIndex}_${columnIndex}`);
+        let chosenImg=chosenSqure.getElementsByTagName('img')[0].id;
         let needRow = '';
-        if(chosenSqure.color==='black'){
-            needRow=rowIndex+1;
+        if(chosenImg.includes('black')){
+            needRow=rowIndex-1;
         }
         else{
-            needRow=rowIndex-1;
+            needRow=rowIndex+1;
         }
         for (let i = 0; i < allTd.length; i++) {
             let specidicId = allTd[i].id;
             if (specidicId.includes(`${needRow}_${columnIndex}`)) {
                 allTd[i].style.backgroundColor = pressedColor;
             }
+        }
+    }
+
+    const colorAllAround=(rowIndex,columnIndex)=>{
+        let allTd = document.getElementsByTagName('td');
+        for (let i = 0; i < allTd.length; i++) {
+            let specidicId = allTd[i].id;
+            //if ((specidicId[0]==rowIndex-1 && specidicId.includes(`_${columnIndex}`)|| (specidicId[0]==rowIndex && specidicId.includes(`_${columnIndex}`) || (specidicId[0]==rowIndex+1 && specidicId.includes(`_${columnIndex}`)
+              //  || (specidicId[2]==columnIndex-1 && specidicId.includes(`_${rowIndex}`) || (specidicId[2]==columnIndex && specidicId.includes(`_${rowIndex}`) || (specidicId[2]==columnIndex-1 && specidicId.includes(`_${rowIndex}`)) {
+                //allTd[i].style.backgroundColor = pressedColor;
+            //}
         }
     }
 
