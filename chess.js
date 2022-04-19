@@ -57,7 +57,6 @@ function startGame() {
     const colorAllRow = (rowIndex) => {
         let allTd = document.getElementsByTagName('td');
         for (let i = 0; i < allTd.length; i++) {
-            allTd[i].style.backgroundColor='';
             let specificId = allTd[i].id;
             if (specificId.includes(`${rowIndex}_`)) {
                 allTd[i].style.backgroundColor = pressedColor;
@@ -66,10 +65,9 @@ function startGame() {
     }
 
 
-    const colorAllColume = (columnIndex) => {
+    const colorAllColumn = (columnIndex) => {
         let allTd = document.getElementsByTagName('td');
         for (let i = 0; i < allTd.length; i++) {
-            allTd[i].style.backgroundColor='';
             let specificId = allTd[i].id;
             if (specificId.includes(`_${columnIndex}`)) {
                 allTd[i].style.backgroundColor = pressedColor;
@@ -81,7 +79,6 @@ function startGame() {
     const colorDiagnal = (rowIndex, columnIndex) => {
         let allTd = document.getElementsByTagName('td');
         for (let i = 0; i < allTd.length; i++) {
-            allTd[i].style.backgroundColor='';
             let specificId = allTd[i].id;
             if (parseInt(specificId[0]) + parseInt(specificId[2]) == parseInt(rowIndex) + parseInt(columnIndex) ||
                 parseInt(specificId[0]) - parseInt(specificId[2]) == parseInt(rowIndex) - parseInt(columnIndex)) {
@@ -90,7 +87,7 @@ function startGame() {
         }
     }
 
-    const colorOneColume = (rowIndex, columnIndex, color) => {
+    const colorOneColumn = (rowIndex, columnIndex, color) => {
         let allTd = document.getElementsByTagName('td');
         let chosenSqure = document.getElementById(`${rowIndex}_${columnIndex}`);
         let chosenImg = chosenSqure.getElementsByTagName('img')[0].id;
@@ -102,7 +99,6 @@ function startGame() {
             needRow = rowIndex + 1;
         }
         for (let i = 0; i < allTd.length; i++) {
-            allTd[i].style.backgroundColor='';
             let specificId = allTd[i].id;
             if (specificId.includes(`${needRow}_${columnIndex}`)) {
                 allTd[i].style.backgroundColor = pressedColor;
@@ -114,7 +110,6 @@ function startGame() {
         let allTd = document.getElementsByTagName('td');
 
         for (let i = 0; i < allTd.length; i++) {
-            allTd[i].style.backgroundColor='';
             let specificId = allTd[i].id;
             if (parseInt(specificId[0]) >= parseInt(rowIndex) - 1 && parseInt(specificId[0]) <= parseInt(rowIndex) + 1 &&
                 parseInt(specificId[2]) >= parseInt(columnIndex) - 1 && parseInt(specificId[2]) <= parseInt(columnIndex) + 1) {
@@ -149,17 +144,17 @@ function startGame() {
                     switch (toolName) {
                         case 'rook':
                             colorAllRow(rowIndex);
-                            colorAllColume(columnIndex);
+                            colorAllColumn(columnIndex);
                             break;
                         case 'bishop':
                             colorDiagnal(rowIndex, columnIndex);
                             break;
                         case 'queen':
                             colorAllRow(rowIndex);
-                            colorAllColume(columnIndex);
+                            colorAllColumn(columnIndex);
                             colorDiagnal(rowIndex, columnIndex);
                             break;
-                        case 'pawn': colorOneColume(rowIndex, columnIndex, color);
+                        case 'pawn': colorOneColumn(rowIndex, columnIndex, color);
                             break;
                         case 'king': colorAllAround(rowIndex, columnIndex);
                             break;
@@ -170,7 +165,6 @@ function startGame() {
                 };
 
                 row.appendChild(square);
-
                 if (toolRows.indexOf(rowIndex) !== -1) {
                     let toolImg = document.createElement('img');
                     toolImg.setAttribute('id', `${tool}_${color}`);
