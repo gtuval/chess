@@ -1,3 +1,4 @@
+
 function startGame() {
     const RowSize = 8;
 
@@ -7,6 +8,7 @@ function startGame() {
 
     let table = document.createElement('table');
     let tbody = document.createElement('tbody');
+    let Boolian=false;
 
     table.appendChild(tbody);
     document.body.appendChild(table);
@@ -52,6 +54,74 @@ function startGame() {
     }
 
 
+    const colorAllRow = (rowIndex) => {
+        let allTd = document.getElementsByTagName('td');
+        for (let i = 0; i < allTd.length; i++) {
+            allTd[i].style.backgroundColor='';
+            let specificId = allTd[i].id;
+            if (specificId.includes(`${rowIndex}_`)) {
+                allTd[i].style.backgroundColor = pressedColor;
+            }
+        }
+    }
+
+
+    const colorAllColume = (columnIndex) => {
+        let allTd = document.getElementsByTagName('td');
+        for (let i = 0; i < allTd.length; i++) {
+            allTd[i].style.backgroundColor='';
+            let specificId = allTd[i].id;
+            if (specificId.includes(`_${columnIndex}`)) {
+                allTd[i].style.backgroundColor = pressedColor;
+            }
+        }
+    }
+
+
+    const colorDiagnal = (rowIndex, columnIndex) => {
+        let allTd = document.getElementsByTagName('td');
+        for (let i = 0; i < allTd.length; i++) {
+            allTd[i].style.backgroundColor='';
+            let specificId = allTd[i].id;
+            if (parseInt(specificId[0]) + parseInt(specificId[2]) == parseInt(rowIndex) + parseInt(columnIndex) ||
+                parseInt(specificId[0]) - parseInt(specificId[2]) == parseInt(rowIndex) - parseInt(columnIndex)) {
+                allTd[i].style.backgroundColor = pressedColor;
+            }
+        }
+    }
+
+    const colorOneColume = (rowIndex, columnIndex, color) => {
+        let allTd = document.getElementsByTagName('td');
+        let chosenSqure = document.getElementById(`${rowIndex}_${columnIndex}`);
+        let chosenImg = chosenSqure.getElementsByTagName('img')[0].id;
+        let needRow = '';
+        if (chosenImg.includes('black')) {
+            needRow = rowIndex - 1;
+        }
+        else {
+            needRow = rowIndex + 1;
+        }
+        for (let i = 0; i < allTd.length; i++) {
+            allTd[i].style.backgroundColor='';
+            let specificId = allTd[i].id;
+            if (specificId.includes(`${needRow}_${columnIndex}`)) {
+                allTd[i].style.backgroundColor = pressedColor;
+            }
+        }
+    }
+
+    const colorAllAround = (rowIndex, columnIndex) => {
+        let allTd = document.getElementsByTagName('td');
+
+        for (let i = 0; i < allTd.length; i++) {
+            allTd[i].style.backgroundColor='';
+            let specificId = allTd[i].id;
+            if (parseInt(specificId[0]) >= parseInt(rowIndex) - 1 && parseInt(specificId[0]) <= parseInt(rowIndex) + 1 &&
+                parseInt(specificId[2]) >= parseInt(columnIndex) - 1 && parseInt(specificId[2]) <= parseInt(columnIndex) + 1) {
+                allTd[i].style.backgroundColor = pressedColor;
+            }
+        }
+    }
     const buildBoard = () => {
         for (let rowIndex = 1; rowIndex <= RowSize; rowIndex++) {
             let row = document.createElement('tr');
@@ -64,7 +134,6 @@ function startGame() {
                 let square = document.createElement('td');
                 square.setAttribute('id', `${rowIndex}_${columnIndex}`);
                 square.onclick = () => {
-
                     //If saved square exists and its equal to square 
                     //then clear the color and saved color
                     if (savedSquare) {
@@ -92,7 +161,7 @@ function startGame() {
                             break;
                         case 'pawn': colorOneColume(rowIndex, columnIndex, color);
                             break;
-                            case 'king': colorAllAround(rowIndex,columnIndex);
+                        case 'king': colorAllAround(rowIndex, columnIndex);
                             break;
                     }
 
@@ -114,71 +183,4 @@ function startGame() {
     }
 
     buildBoard();
-    const paintAllRow = () => {
-    }
-
-    const colorAllRow = (rowIndex) => {
-        let allTd = document.getElementsByTagName('td');
-        for (let i = 0; i < allTd.length; i++) {
-            let specidicId = allTd[i].id;
-            if (specidicId.includes(`${rowIndex}_`)) {
-                allTd[i].style.backgroundColor = pressedColor;
-            }
-        }
-    }
-
-
-    const colorAllColume = (columnIndex) => {
-        let allTd = document.getElementsByTagName('td');
-        for (let i = 0; i < allTd.length; i++) {
-            let specidicId = allTd[i].id;
-            if (specidicId.includes(`_${columnIndex}`)) {
-                allTd[i].style.backgroundColor = pressedColor;
-            }
-        }
-    }
-
-
-    const colorDiagnal = (rowIndex, columnIndex) => {
-        let allTd = document.getElementsByTagName('td');
-        for (let i = 0; i < allTd.length; i++) {
-            let specidicId = allTd[i].id;
-            if (parseInt(specidicId[0]) + parseInt(specidicId[2]) == parseInt(rowIndex) + parseInt(columnIndex) ||
-                parseInt(specidicId[0]) - parseInt(specidicId[2]) == parseInt(rowIndex) - parseInt(columnIndex)) {
-                allTd[i].style.backgroundColor = pressedColor;
-            }
-        }
-    }
-
-    const colorOneColume = (rowIndex, columnIndex, color) => {
-        let allTd = document.getElementsByTagName('td');
-        let chosenSqure=document.getElementById(`${rowIndex}_${columnIndex}`);
-        let chosenImg=chosenSqure.getElementsByTagName('img')[0].id;
-        let needRow = '';
-        if(chosenImg.includes('black')){
-            needRow=rowIndex-1;
-        }
-        else{
-            needRow=rowIndex+1;
-        }
-        for (let i = 0; i < allTd.length; i++) {
-            let specidicId = allTd[i].id;
-            if (specidicId.includes(`${needRow}_${columnIndex}`)) {
-                allTd[i].style.backgroundColor = pressedColor;
-            }
-        }
-    }
-
-    const colorAllAround=(rowIndex,columnIndex)=>{
-        let allTd = document.getElementsByTagName('td');
-        for (let i = 0; i < allTd.length; i++) {
-            let specidicId = allTd[i].id;
-            //if ((specidicId[0]==rowIndex-1 && specidicId.includes(`_${columnIndex}`)|| (specidicId[0]==rowIndex && specidicId.includes(`_${columnIndex}`) || (specidicId[0]==rowIndex+1 && specidicId.includes(`_${columnIndex}`)
-              //  || (specidicId[2]==columnIndex-1 && specidicId.includes(`_${rowIndex}`) || (specidicId[2]==columnIndex && specidicId.includes(`_${rowIndex}`) || (specidicId[2]==columnIndex-1 && specidicId.includes(`_${rowIndex}`)) {
-                //allTd[i].style.backgroundColor = pressedColor;
-            //}
-        }
-    }
-
-
 }
